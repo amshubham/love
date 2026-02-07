@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yagni ❤️ Shubham</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Poppins, sans-serif;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ff5f6d,#ffc371);
+  overflow:hidden;
+  color:#fff;
+}
+
+/* card */
+.card{
+  width:330px;
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(12px);
+  padding:20px;
+  border-radius:20px;
+  text-align:center;
+  z-index:2;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+img{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  border:3px solid white;
+  object-fit:cover;
+  animation:zoom 3s infinite alternate;
+}
+
+@keyframes zoom{
+  from{transform:scale(1);}
+  to{transform:scale(1.08);}
+}
+
+h1{
+  font-size:20px;
+  margin:10px 0;
+}
+
+#letter{
+  min-height:60px;
+  font-size:14px;
+  margin:10px 0;
+}
+
+/* buttons */
+button{
+  padding:10px 15px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  margin:5px;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+.yes{ background:#28a745; color:white; }
+.yes:hover{ transform:scale(1.1); }
+
+.no{ background:#dc3545; color:white; }
+
+/* timer */
+#timer{
+  font-size:12px;
+  margin-top:10px;
+}
+
+/* success screen */
+#success{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:radial-gradient(circle,#ff758c,#ff7eb3);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  font-size:24px;
+  font-weight:bold;
+  text-align:center;
+  visibility:hidden;
+  opacity:0;
+  transition:0.5s;
+  z-index:5;
+}
+
+#success.show{
+  visibility:visible;
+  opacity:1;
+}
+
+/* hearts */
+.hearts{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  pointer-events:none;
+}
+.heart{
+  position:absolute;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  from{ transform:translateY(-10%); }
+  to{ transform:translateY(110vh); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <!-- YOUR IMAGE -->
+  <img src="https://uploads.onecompiler.io/44cvhfahm/44cvhdn3e/56194.jpg">
+
+  <h1>Yagni ❤️ Shubham</h1>
+
+  <div id="letter"></div>
+
+  <button class="yes" onclick="acceptLove()">Yes ❤️</button>
+  <button class="no" id="noBtn">No 💔</button>
+
+  <div id="timer"></div>
+</div>
+
+<!-- success -->
+<div id="success">
+  ❤️ She Said YES ❤️  
+  <br><br>
+  Welcome Mrs. Shubham 💍  
+</div>
+
+<div class="hearts" id="hearts"></div>
+
+<audio id="music" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">
+</audio>
+
+<script>
+/* typing */
+var text = "From the moment I saw you, my heart chose you ❤️ Will you be mine forever?";
+var i = 0;
+function typeLetter(){
+  if(i < text.length){
+    document.getElementById("letter").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeLetter, 40);
+  }
+}
+typeLetter();
+
+/* countdown */
+var seconds = 30;
+setInterval(function(){
+  document.getElementById("timer").innerHTML = "Decision time ⏳ " + seconds;
+  if(seconds>0) seconds--;
+},1000);
+
+/* YES */
+function acceptLove(){
+  document.getElementById("success").classList.add("show");
+  document.getElementById("music").play();
+  for(let i=0;i<60;i++) createHeart();
+}
+
+/* NO runs forever */
+var no = document.getElementById("noBtn");
+
+function moveNo(){
+  var x = Math.random() * (window.innerWidth - 100);
+  var y = Math.random() * (window.innerHeight - 50);
+  no.style.position = "fixed";
+  no.style.left = x + "px";
+  no.style.top = y + "px";
+}
+
+no.addEventListener("mouseover", moveNo);
+no.addEventListener("click", function(e){
+  e.preventDefault();
+  moveNo();
+});
+
+/* hearts */
+function createHeart(){
+  var heart = document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="❤️";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.animationDuration=(3+Math.random()*5)+"s";
+  document.getElementById("hearts").appendChild(heart);
+  setTimeout(()=>heart.remove(),8000);
+}
+setInterval(createHeart,250);
+</script>
+
+</body>
+</html>
